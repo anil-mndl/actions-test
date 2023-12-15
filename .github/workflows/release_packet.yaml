@@ -53,6 +53,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_name: SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
 
       - name: Upload API ZIP to Release
@@ -62,4 +63,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_name: SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
