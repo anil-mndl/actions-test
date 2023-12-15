@@ -58,7 +58,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./client/SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_name: SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
 
@@ -68,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./api/SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_name: SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
