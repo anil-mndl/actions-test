@@ -9,6 +9,13 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
+      - name: Strip version prefix v.x.x => x.x
+        id: strip_version
+        run: |
+          VERSION_STRING=${{ github.ref_name }}
+          STRIPPED_VERSION=${VERSION_STRING:2}
+          echo "::set-output name=stripped_version::$STRIPPED_VERSION"
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -36,7 +43,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./client.zip
-          asset_name: SalemBot-${{ github.ref_name }}.zip
+          asset_name: SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
 
       - name: Upload API ZIP to Release
@@ -46,5 +53,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./api.zip
-          asset_name: SalemApi-${{ github.ref_name }}.zip
+          asset_name: SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
