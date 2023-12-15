@@ -14,8 +14,7 @@ jobs:
         run: |
           VERSION_STRING=${{ github.ref_name }}
           STRIPPED_VERSION=${VERSION_STRING:2}
-          echo "::set-output name=stripped_version::$STRIPPED_VERSION"
-          echo "stripped_version=$STRIPPED_VERSION"
+          echo "stripped_version=$STRIPPED_VERSION" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v2
