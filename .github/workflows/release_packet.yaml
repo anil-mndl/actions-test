@@ -27,7 +27,7 @@ jobs:
           rm -rf client/node_modules
           rm -rf client/sampleData
           rm -rf client/test
-          rem client/eslint.js
+          rm client/eslint.js
 
       - name: Zip client folder
         run: zip -r client.zip client/
