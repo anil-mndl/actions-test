@@ -30,10 +30,16 @@ jobs:
           rm client/eslint.js
 
       - name: Zip client folder
-        run: zip -r SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip client/
+        run: |
+          cd client
+          zip -r SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip ./
+          cd ..
 
       - name: Zip api folder
-        run: zip -r SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip api/
+        run: |
+          cd api
+          zip -r SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip ./
+          cd ..
 
       - name: Create Release
         id: create_release
