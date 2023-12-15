@@ -9,6 +9,7 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
+      # tag names come in v.x.x format. we need to create filenames stripping 'v.'
       - name: Strip version prefix v.x.x => x.x
         id: strip_version
         run: |
@@ -38,6 +39,7 @@ jobs:
           rm -rf client/test
           rm client/eslint.js
 
+      # need to rename the folder first before zipping to zip it in the right format
       - name: Zip client folder
         run: | 
           mv client ${{ steps.file_names.outputs.bot_filename }}
