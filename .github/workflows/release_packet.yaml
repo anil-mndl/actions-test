@@ -30,10 +30,10 @@ jobs:
           rm client/eslint.js
 
       - name: Zip client folder
-        run: zip -r client.zip client/
+        run: zip -r SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip client/
 
       - name: Zip api folder
-        run: zip -r api.zip api/
+        run: zip -r SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip api/
 
       - name: Create Release
         id: create_release
@@ -52,8 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./client.zip
-          asset_name: SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
 
       - name: Upload API ZIP to Release
@@ -62,6 +61,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./api.zip
-          asset_name: SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
           asset_content_type: application/zip
