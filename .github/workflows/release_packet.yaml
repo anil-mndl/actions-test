@@ -16,6 +16,15 @@ jobs:
           STRIPPED_VERSION=${VERSION_STRING:2}
           echo "stripped_version=$STRIPPED_VERSION" >> $GITHUB_OUTPUT
 
+      - name: Assign zipped file names
+        id: file_names
+        run: |
+          BOT_FILENAME=SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
+          API_FILENAME=SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
+          echo "bot_filename=BOT_FILENAME" >> $GITHUB_OUTPUT
+          echo "api_filename=API_FILENAME" >> $GITHUB_OUTPUT
+          
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -30,16 +39,14 @@ jobs:
           rm client/eslint.js
 
       - name: Zip client folder
-        run: |
-          cd client
-          zip -r SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip ./
-          cd ..
+        run: | 
+          zip -r client.zip client/
+          mv client.zip ${{ steps.file_names.outputs.bot_filename }}
 
       - name: Zip api folder
         run: |
-          cd api
-          zip -r SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip ./
-          cd ..
+          zip -r api.zip api/
+          mv api.zip ${{ steps.file_names.outputs.api_filename }}
 
       - name: Create Release
         id: create_release
@@ -58,8 +65,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./client/SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
-          asset_name: SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./${{ steps.file_names.outputs.bot_filename }}
+          asset_name: ${{ steps.file_names.outputs.bot_filename }}
           asset_content_type: application/zip
 
       - name: Upload API ZIP to Release
@@ -68,6 +75,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./api/SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
-          asset_name: SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
+          asset_path: ./${{ steps.file_names.outputs.api_filename }}
+          asset_name: ${{ steps.file_names.outputs.api_filename }}
           asset_content_type: application/zip
