@@ -19,6 +19,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Delete specific files and folders
+        run: |
+          rm -rf api/__blobstorage__
+          rm api/.funcignore
+          rm api/sample.dat
+          rm -rf client/node_modules
+          rm -rf client/sampleData
+          rm -rf client/test
+          rem client/eslint.js
+
       - name: Zip client folder
         run: zip -r client.zip client/
 
