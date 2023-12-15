@@ -21,8 +21,8 @@ jobs:
         run: |
           BOT_FILENAME=SalemBot-${{ steps.strip_version.outputs.stripped_version }}.zip
           API_FILENAME=SalemApi-${{ steps.strip_version.outputs.stripped_version }}.zip
-          echo "bot_filename=BOT_FILENAME" >> $GITHUB_OUTPUT
-          echo "api_filename=API_FILENAME" >> $GITHUB_OUTPUT
+          echo "bot_filename=$BOT_FILENAME" >> $GITHUB_OUTPUT
+          echo "api_filename=$API_FILENAME" >> $GITHUB_OUTPUT
           
 
       - name: Checkout code
